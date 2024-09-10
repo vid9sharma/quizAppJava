@@ -11,7 +11,7 @@ import java.util.List;
 public class QuestionService {
 
   @Autowired
-  QuestionDAO questionDAO;
+  private QuestionDAO questionDAO;
 
   public List<Question> getAllQuestions() {
     return questionDAO.findAll();
