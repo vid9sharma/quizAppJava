@@ -21,6 +21,10 @@ public class QuestionService {
     return questionDAO.findByCategory(category);
   }
 
+  public List<Question> getQuestionsByDifficultyLevel(String level) {
+    return questionDAO.findByDifficultyLevel(level);
+  }
+
   public Question addQuestion(Question question) {
     return questionDAO.save(question);
   }

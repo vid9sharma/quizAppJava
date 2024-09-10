@@ -10,4 +10,6 @@ import java.util.List;
 public interface QuestionDAO extends JpaRepository<Question, Integer> {
 
   List<Question> findByCategory(String category);
+
+  List<Question> findByDifficultyLevel(String level);
 }
