@@ -17,10 +17,10 @@ public class QuestionController {
   @Autowired
   QuestionService questionService;
 
-  @GetMapping("csrfToken")
-  public CsrfToken getCsrfToken(HttpServletRequest request) {
-    return (CsrfToken) request.getAttribute("_csrf");
-  }
+//  @GetMapping("csrfToken")
+//  public CsrfToken getCsrfToken(HttpServletRequest request) {
+//    return (CsrfToken) request.getAttribute("_csrf");
+//  }
 
   @GetMapping
   public List<Question> getAllQuestions() {
