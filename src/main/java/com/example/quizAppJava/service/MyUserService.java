@@ -44,7 +44,7 @@ public class MyUserService {
         authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(myUser.getUsername(), myUser.getPassword()));
 
     if (authentication.isAuthenticated()) {
-      return jwtService.generateToken();
+      return jwtService.generateToken(myUser.getUsername());
     } else {
       throw new Exception("User not authenticated");
     }
