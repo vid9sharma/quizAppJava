@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.*;
 import org.springframework.security.authentication.dao.*;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -30,13 +31,21 @@ public class SecurityConfig {
     return httpSecurity.csrf(customizer -> customizer.disable())
 
         // all requests need to be authenticated
-        .authorizeHttpRequests(request -> request.anyRequest().authenticated())
+        .authorizeHttpRequests(request -> request
+            .requestMatchers("user/register", "user/updatePassword", "user/generateJwtToken")
+            .permitAll()
+            .anyRequest().authenticated())
         // enable form login
 //        .formLogin(Customizer.withDefaults())
         // enable login for REST APIs
         .httpBasic(Customizer.withDefaults())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .build();
+  }
+
+  @Bean
+  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    return config.getAuthenticationManager();
   }
 
   @Bean
