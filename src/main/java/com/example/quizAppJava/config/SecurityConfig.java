@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -24,11 +25,16 @@ public class SecurityConfig {
   @Autowired
   private MyUserDetailsService myUserDetailsService;
 
+  @Autowired
+  private JwtFilter jwtFilter;
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-
-    // disable crsf and create stateless http
-    return httpSecurity.csrf(customizer -> customizer.disable())
+    return httpSecurity
+        // enable cors
+//        .cors(Customizer.withDefaults())
+        // disable crsf and create stateless http
+        .csrf(customizer -> customizer.disable())
 
         // all requests need to be authenticated
         .authorizeHttpRequests(request -> request
@@ -40,6 +46,7 @@ public class SecurityConfig {
         // enable login for REST APIs
         .httpBasic(Customizer.withDefaults())
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
         .build();
   }
 
