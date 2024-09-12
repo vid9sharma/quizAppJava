@@ -15,8 +15,8 @@ public class MyUserService {
   @Autowired
   private MyUserDAO myUserDAO;
 
-  @Autowired
-  private AuthenticationManager authManager;
+//  @Autowired
+//  private AuthenticationManager authManager;
 
   @Autowired
   private JWTService jwtService;
@@ -39,14 +39,14 @@ public class MyUserService {
     return myUserDAO.save(existingUser);
   }
 
-  public String generateJwtToken(MyUser myUser) throws Exception {
-    Authentication
-        authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(myUser.getUsername(), myUser.getPassword()));
-
-    if (authentication.isAuthenticated()) {
-      return jwtService.generateToken(myUser.getUsername());
-    } else {
-      throw new Exception("User not authenticated");
-    }
-  }
+//  public String generateJwtToken(MyUser myUser) throws Exception {
+//    Authentication
+//        authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(myUser.getUsername(), myUser.getPassword()));
+//
+//    if (authentication.isAuthenticated()) {
+//      return jwtService.generateToken(myUser.getUsername());
+//    } else {
+//      throw new Exception("User not authenticated");
+//    }
+//  }
 }

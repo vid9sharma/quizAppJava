@@ -22,8 +22,8 @@ public class MyUserController {
     return myUserService.updatePassword(myUser);
   }
 
-  @PostMapping("generateJwtToken")
-  public String generateJwtToken(@RequestBody MyUser myUser) throws Exception {
-    return myUserService.generateJwtToken(myUser);
-  }
+//  @PostMapping("generateJwtToken")
+//  public String generateJwtToken(@RequestBody MyUser myUser) throws Exception {
+//    return myUserService.generateJwtToken(myUser);
+//  }
 }

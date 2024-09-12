@@ -30,38 +30,42 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-    return httpSecurity
-        // enable cors
-//        .cors(Customizer.withDefaults())
-        // disable crsf and create stateless http
-        .csrf(customizer -> customizer.disable())
-
-        // all requests need to be authenticated
-        .authorizeHttpRequests(request -> request
-            .requestMatchers("user/register", "user/updatePassword", "user/generateJwtToken")
-            .permitAll()
-            .anyRequest().authenticated())
-        // enable form login
-//        .formLogin(Customizer.withDefaults())
-        // enable login for REST APIs
-        .httpBasic(Customizer.withDefaults())
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+    return httpSecurity.authorizeHttpRequests(requests -> requests.anyRequest().authenticated())
+        .oauth2Login(Customizer.withDefaults())
         .build();
+//    return httpSecurity
+//        // enable cors
+////        .cors(Customizer.withDefaults())
+//        // disable crsf and create stateless http
+//        .csrf(customizer -> customizer.disable())
+//
+//        // all requests need to be authenticated
+//        .authorizeHttpRequests(request -> request
+//            .requestMatchers("user/register", "user/updatePassword", "user/generateJwtToken")
+//            .permitAll()
+//            .anyRequest().authenticated())
+//        // enable form login
+////        .formLogin(Customizer.withDefaults())
+//        // enable login for REST APIs
+//        .httpBasic(Customizer.withDefaults())
+//        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//        .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+//        .build();
+
   }
 
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-    return config.getAuthenticationManager();
-  }
-
-  @Bean
-  public AuthenticationProvider authenticationProvider() {
-    //Database authentication
-    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-    provider.setPasswordEncoder(new BCryptPasswordEncoder(10));
-    provider.setUserDetailsService(myUserDetailsService);
-
-    return provider;
-  }
+//  @Bean
+//  public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+//    return config.getAuthenticationManager();
+//  }
+//
+//  @Bean
+//  public AuthenticationProvider authenticationProvider() {
+//    //Database authentication
+//    DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+//    provider.setPasswordEncoder(new BCryptPasswordEncoder(10));
+//    provider.setUserDetailsService(myUserDetailsService);
+//
+//    return provider;
+//  }
 }
